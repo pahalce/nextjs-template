@@ -1,24 +1,30 @@
 import { sql } from "drizzle-orm";
+import { Pool } from "pg";
 import { afterAll, beforeEach } from "vite-plus/test";
 
-function readWorkerIndex(): number {
-  const poolId = Number.parseInt(process.env.VITEST_POOL_ID ?? "", 10);
+import { readTestAdminDatabaseUrl, readTestWorkerId } from "./environment";
 
-  if (!Number.isInteger(poolId) || poolId < 1) {
-    throw new Error("VITEST_POOL_ID must be a positive integer");
+const workerId = readTestWorkerId();
+const database = `test_worker_${workerId}`;
+const adminDatabaseUrl = readTestAdminDatabaseUrl();
+const adminPool = new Pool({ connectionString: adminDatabaseUrl });
+
+try {
+  const result = await adminPool.query<{ exists: boolean }>(
+    "SELECT EXISTS(SELECT 1 FROM pg_database WHERE datname = $1) AS exists",
+    [database],
+  );
+
+  if (result.rows[0]?.exists !== true) {
+    await adminPool.query(`CREATE DATABASE ${database} TEMPLATE test_template`);
   }
-
-  return poolId - 1;
+} finally {
+  await adminPool.end();
 }
 
-const workerIndex = readWorkerIndex();
-const databaseUrl = process.env[`TEST_DATABASE_URL_${workerIndex + 1}`];
-
-if (databaseUrl === undefined) {
-  throw new Error(`No test database was prepared for worker ${workerIndex + 1}`);
-}
-
-process.env.DATABASE_URL = databaseUrl;
+const testDatabaseUrl = new URL(adminDatabaseUrl);
+testDatabaseUrl.pathname = `/${database}`;
+process.env.DATABASE_URL = testDatabaseUrl.toString();
 
 beforeEach(async () => {
   const { db } = await import("../db/client");

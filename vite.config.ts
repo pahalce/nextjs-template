@@ -3,11 +3,9 @@ import { defineConfig } from "vite-plus";
 export default defineConfig({
   test: {
     environment: "node",
-    fileParallelism: true,
     globalSetup: ["./tests/global-setup.ts"],
     setupFiles: ["./tests/setup.ts"],
     include: ["tests/**/*.test.ts"],
-    maxWorkers: 2,
     hookTimeout: 60_000,
     testTimeout: 15_000,
   },

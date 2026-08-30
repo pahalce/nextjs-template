@@ -3,10 +3,9 @@ import { drizzle } from "drizzle-orm/node-postgres";
 import { migrate } from "drizzle-orm/node-postgres/migrator";
 import { Pool } from "pg";
 
-const workerCount = 2;
 const templateDatabase = "test_template";
 
-function databaseUrl({ baseUrl, database }: { baseUrl: string; database: string }): string {
+function databaseUrl({ baseUrl, database }: { baseUrl: URL; database: string }): string {
   const url = new URL(baseUrl);
   url.pathname = `/${database}`;
   return url.toString();
@@ -26,26 +25,34 @@ export default async function setup() {
       "synchronous_commit=off",
     ])
     .start();
-  const adminUrl = container.getConnectionUri();
-  const adminPool = new Pool({ connectionString: adminUrl });
+  const adminUrl = new URL(container.getConnectionUri());
 
-  await adminPool.query(`CREATE DATABASE ${templateDatabase}`);
+  try {
+    const adminPool = new Pool({ connectionString: adminUrl.toString() });
 
-  const templateUrl = databaseUrl({ baseUrl: adminUrl, database: templateDatabase });
-  const templatePool = new Pool({ connectionString: templateUrl });
-  const templateDb = drizzle({ client: templatePool });
-  await migrate(templateDb, { migrationsFolder: "./drizzle" });
-  await templatePool.end();
+    try {
+      await adminPool.query(`CREATE DATABASE ${templateDatabase}`);
 
-  for (let workerId = 1; workerId <= workerCount; workerId += 1) {
-    const database = `test_worker_${workerId}`;
-    await adminPool.query(`CREATE DATABASE ${database} TEMPLATE ${templateDatabase}`);
-    process.env[`TEST_DATABASE_URL_${workerId}`] = databaseUrl({ baseUrl: adminUrl, database });
+      const templateUrl = databaseUrl({ baseUrl: adminUrl, database: templateDatabase });
+      const templatePool = new Pool({ connectionString: templateUrl });
+
+      try {
+        const templateDb = drizzle({ client: templatePool });
+        await migrate(templateDb, { migrationsFolder: "./drizzle" });
+      } finally {
+        await templatePool.end();
+      }
+    } finally {
+      await adminPool.end();
+    }
+
+    process.env.TEST_ADMIN_DATABASE_URL = adminUrl.toString();
+
+    return async () => {
+      await container.stop();
+    };
+  } catch (error) {
+    await Promise.allSettled([container.stop()]);
+    throw error;
   }
-
-  await adminPool.end();
-
-  return async () => {
-    await container.stop();
-  };
 }

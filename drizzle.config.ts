@@ -1,6 +1,8 @@
 import { loadEnvConfig } from "@next/env";
 import { defineConfig } from "drizzle-kit";
 
+import { readDatabaseUrl } from "./db/environment";
+
 loadEnvConfig(process.cwd());
 
 export default defineConfig({
@@ -8,6 +10,6 @@ export default defineConfig({
   schema: "./db/schema.ts",
   out: "./drizzle",
   dbCredentials: {
-    url: process.env.DATABASE_URL ?? "postgresql://localhost/database_url_required",
+    url: readDatabaseUrl(),
   },
 });

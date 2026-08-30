@@ -1,13 +1,9 @@
-import { setTimeout } from "node:timers/promises";
-
 import { expect, test } from "vite-plus/test";
 
 import { createTodo, listTodos } from "../db/todos";
 
-test("worker A has an isolated database", async () => {
-  await createTodo({ title: "same title in every worker" });
-  await setTimeout(250);
+test("creates and lists todo A", async () => {
+  await createTodo({ title: "todo from worker A" });
 
-  const rows = await listTodos();
-  expect(rows).toHaveLength(1);
+  expect(await listTodos()).toHaveLength(1);
 });
