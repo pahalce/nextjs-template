@@ -14,9 +14,6 @@ importers:
 
   .:
     dependencies:
-      '@next/env':
-        specifier: ^16.3.3
-        version: 16.3.3
       drizzle-orm:
         specifier: ^0.45.2
         version: 0.45.2(@types/pg@8.23.1)(pg@8.23.0)
@@ -33,6 +30,9 @@ importers:
         specifier: 19.2.8
         version: 19.2.8(react@19.2.8)
     devDependencies:
+      '@next/env':
+        specifier: ^16.3.3
+        version: 16.3.3
       '@oxlint/plugins':
         specifier: 1.79.0
         version: 1.79.0

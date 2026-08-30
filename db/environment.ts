@@ -1,5 +1,6 @@
 export type DatabaseUrl = string & { readonly __brand: "DatabaseUrl" };
 
+/** @internal Used by test infrastructure to parse container connection URLs. */
 export function parseDatabaseUrl(value: string | undefined): DatabaseUrl {
   if (value === undefined || value.length === 0) {
     throw new Error("DATABASE_URL is required");

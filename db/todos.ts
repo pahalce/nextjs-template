@@ -7,6 +7,7 @@ export async function listTodos(): Promise<Todo[]> {
   return db.select().from(todos).orderBy(asc(todos.id));
 }
 
+/** @internal Used by tests to create database fixtures. */
 export async function createTodo(todo: NewTodo): Promise<Todo> {
   const [created] = await db.insert(todos).values(todo).returning();
 

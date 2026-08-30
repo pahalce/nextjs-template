@@ -27,10 +27,14 @@ const config = {
     "catalogReferences",
     "cycles",
   ],
-  // Keep development-only lint implementations out of production dead-file
-  // analysis. Active plugins remain reachable through vite.config.ts in the
-  // regular run.
-  project: ["**/*.{js,cjs,mjs,jsx,ts,cts,mts,tsx,css}!", "!tools/oxlint/**!"],
+  // Keep test and tooling files out of production dead-file analysis. The
+  // regular run still follows their active configuration and imports.
+  project: [
+    "**/*.{js,cjs,mjs,jsx,ts,cts,mts,tsx,css}!",
+    "!playwright.shared.ts!",
+    "!tests/**!",
+    "!tools/oxlint/**!",
+  ],
   rules: {
     cycles: "warn",
   },

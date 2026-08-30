@@ -18,7 +18,6 @@
     "prepare": "vp config"
   },
   "dependencies": {
-    "@next/env": "^16.3.3",
     "drizzle-orm": "^0.45.2",
     "next": "16.3.3",
     "pg": "^8.23.0",
@@ -26,6 +25,7 @@
     "react-dom": "19.2.8"
   },
   "devDependencies": {
+    "@next/env": "^16.3.3",
     "@oxlint/plugins": "1.79.0",
     "@playwright/test": "^1.62.1",
     "@tailwindcss/postcss": "^4",
