@@ -1,12 +1,11 @@
 {
-  "description": "Run project quality checks before Codex finishes a turn.",
   "hooks": {
     "Stop": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "vp node \"$(git rev-parse --show-toplevel)/.codex/hooks/quality-stop.mts\"",
+            "command": "vp node \"$CLAUDE_PROJECT_DIR/.claude/hooks/quality-stop.mts\"",
             "timeout": 180,
             "statusMessage": "Running project quality checks"
           }

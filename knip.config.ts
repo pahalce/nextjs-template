@@ -1,6 +1,11 @@
 import type { KnipConfig } from "knip";
 
 const config = {
+  entry: [
+    ".agents/hooks/quality-check.mts",
+    ".claude/hooks/quality-stop.mts",
+    ".codex/hooks/quality-stop.mts",
+  ],
   // Knip replaces its default issue set when `include` is present, so keep the
   // defaults explicit when adding cycle detection.
   include: [
