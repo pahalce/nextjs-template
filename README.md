@@ -22,6 +22,10 @@ vp run dev
 
 `https://nextjs-template.localhost` に、マイグレーションで投入したTodoが表示されます。
 
+## テスト
+
+テストを追加・変更する前に、[テスト戦略](docs/testing/README.md)から対象に合う方針を確認してください。
+
 ## worktreeでの開発
 
 IDEなどでworktreeを作成した後、依存関係と環境変数をセットアップします。詳しい手順と注意点は[worktreeを使った開発](docs/worktree-development.md)を参照してください。
