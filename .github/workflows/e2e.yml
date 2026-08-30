@@ -37,4 +37,4 @@ jobs:
         run: vp exec playwright install --with-deps chromium
 
       - name: Run E2E tests
-        run: vp run test:e2e:ci
+        run: vp exec playwright test --config playwright.ci.config.ts

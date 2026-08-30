@@ -5,6 +5,7 @@ const config = {
     ".agents/hooks/quality-check.mts",
     ".claude/hooks/quality-stop.mts",
     ".codex/hooks/quality-stop.mts",
+    "playwright.ci.config.ts",
     "tests/**/*.test.ts",
   ],
   // Knip replaces its default issue set when `include` is present, so keep the

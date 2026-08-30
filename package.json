@@ -9,8 +9,6 @@
     "lint": "vp lint",
     "test": "vp test",
     "test:e2e": "playwright test",
-    "test:e2e:ci": "playwright test --config playwright.ci.config.ts",
-    "test:e2e:install": "playwright install chromium",
     "worktree:setup": "./scripts/setup-worktree.sh",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
