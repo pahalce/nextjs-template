@@ -24,18 +24,10 @@ vp run dev
 
 ## worktreeでの開発
 
-worktreeを作成し、そのディレクトリで依存関係をインストールします。
+IDEなどでworktreeを作成した後、依存関係と環境変数をセットアップします。詳しい手順と注意点は[worktreeを使った開発](docs/worktree-development.md)を参照してください。
 
 ```bash
-git worktree add ../nextjs-template-fix-ui -b fix-ui
-cd ../nextjs-template-fix-ui
 vp install
 vp run worktree:setup
 vp run dev
 ```
-
-`worktree:setup`は、メインworktreeの`.env.local`を現在のworktreeへコピーします。すでに`.env.local`がある場合は上書きしません。
-
-portlessがworktreeを検出し、ブランチごとにURLを分けます。この例のURLは`https://fix-ui.nextjs-template.localhost`です。
-
-現在はすべてのworktreeが同じPostgreSQLデータベースを使います。複数のworktreeから同時にマイグレーションを実行しないでください。
