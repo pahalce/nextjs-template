@@ -22,6 +22,16 @@ vp run dev
 
 `https://nextjs-template.localhost` に、マイグレーションで投入したTodoが表示されます。
 
+## E2Eテスト
+
+初回セットアップと実行方法は[ONBOARDING.md](ONBOARDING.md)を参照してください。
+
+```bash
+vp run test:e2e
+```
+
+開発中は必要なときだけ実行します。`pull_request`では通常のCIと分かれたE2Eワークフローがproduction buildに対して実行します。GitHub Actions固有のretryとreporterは`playwright.ci.config.ts`に分けています。
+
 ## worktreeでの開発
 
 IDEなどでworktreeを作成した後、依存関係と環境変数をセットアップします。詳しい手順と注意点は[worktreeを使った開発](docs/worktree-development.md)を参照してください。
