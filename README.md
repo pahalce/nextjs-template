@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js template
 
-## Getting Started
+Next.js 16、PostgreSQL、Drizzle ORMを使う最小構成です。
 
-First, run the development server:
+## 開発
+
+PostgreSQLを起動し、マイグレーションを適用してから開発サーバーを起動します。
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.example .env
+docker compose up -d --wait
+vp run db:migrate
+vp run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`http://localhost:3000` に、マイグレーションで投入したTodoが表示されます。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## DBテスト
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Dockerを起動した状態で実行します。開発用PostgreSQLを事前に起動する必要はありません。
 
-## Learn More
+```bash
+vp test
+```
 
-To learn more about Next.js, take a look at the following resources:
+アプリ用DBとテスト用DBは共有しません。
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- アプリ用: Composeで起動する`nextjs_template`
+- テスト用: Testcontainersが別コンテナ内に作る`test_worker_1`と`test_worker_2`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+テスト全体でテスト用PostgreSQLコンテナを1つだけ起動します。マイグレーション済みの`test_template`からVitest workerごとのDatabaseを複製し、各テストの前に`TRUNCATE ... RESTART IDENTITY CASCADE`を実行します。異なるworkerは同じテーブル名と一意値を使っても干渉しません。テスト終了時にはコンテナごと削除します。
 
-## Deploy on Vercel
+スキーマを変更した場合は、新しいマイグレーションを生成します。
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+vp run db:generate
+```

@@ -5,6 +5,7 @@ const config = {
     ".agents/hooks/quality-check.mts",
     ".claude/hooks/quality-stop.mts",
     ".codex/hooks/quality-stop.mts",
+    "tests/**/*.test.ts",
   ],
   // Knip replaces its default issue set when `include` is present, so keep the
   // defaults explicit when adding cycle detection.
@@ -29,9 +30,6 @@ const config = {
   // analysis. Active plugins remain reachable through vite.config.ts in the
   // regular run.
   project: ["**/*.{js,cjs,mjs,jsx,ts,cts,mts,tsx,css}!", "!tools/oxlint/**!"],
-  // Vite+ requires this catalog alias even though application code does not
-  // import the aliased Vite package directly.
-  ignoreDependencies: ["vite"],
   rules: {
     cycles: "warn",
   },

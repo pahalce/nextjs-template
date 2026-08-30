@@ -7,27 +7,35 @@
     "build": "next build",
     "start": "next start",
     "lint": "vp lint",
+    "test": "vp test",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
     "knip": "knip",
     "knip:production": "knip --production",
     "knip:fix": "knip --fix",
     "prepare": "vp config"
   },
   "dependencies": {
+    "@next/env": "^16.3.3",
+    "drizzle-orm": "^0.45.2",
     "next": "16.3.3",
+    "pg": "^8.23.0",
     "react": "19.2.8",
     "react-dom": "19.2.8"
   },
   "devDependencies": {
     "@oxlint/plugins": "1.79.0",
     "@tailwindcss/postcss": "^4",
+    "@testcontainers/postgresql": "^12.1.0",
     "@types/node": "^20",
+    "@types/pg": "^8.23.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "1.0.0",
+    "drizzle-kit": "^0.31.10",
     "knip": "6.33.0",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "vite": "catalog:",
     "vite-plus": "catalog:"
   },
   "packageManager": "pnpm@11.24.0"
