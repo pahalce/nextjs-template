@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "portless run next dev",
     "build": "next build",
     "start": "next start",
     "lint": "vp lint",
@@ -34,6 +34,7 @@
     "babel-plugin-react-compiler": "1.0.0",
     "drizzle-kit": "^0.31.10",
     "knip": "6.33.0",
+    "portless": "^0.15.6",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vite-plus": "catalog:"
