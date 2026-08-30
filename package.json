@@ -7,6 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "vp lint",
+    "knip": "knip",
+    "knip:production": "knip --production",
+    "knip:fix": "knip --fix",
     "prepare": "vp config"
   },
   "dependencies": {
@@ -21,6 +24,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "1.0.0",
+    "knip": "6.33.0",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vite": "catalog:",

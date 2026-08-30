@@ -1,0 +1,17 @@
+{
+  "description": "Run Knip before Codex finishes a turn.",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$(git rev-parse --show-toplevel)/.codex/hooks/knip-stop.sh\"",
+            "timeout": 120,
+            "statusMessage": "Checking unused code with Knip"
+          }
+        ]
+      }
+    ]
+  }
+}
