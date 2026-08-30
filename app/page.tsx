@@ -1,8 +1,10 @@
 import { Suspense } from "react";
+import { connection } from "next/server";
 
 import { listTodos } from "../db/todos";
 
 async function TodoList() {
+  await connection();
   const todos = await listTodos();
 
   if (todos.length === 0) {

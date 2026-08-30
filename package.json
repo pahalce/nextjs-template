@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "vp lint",
     "test": "vp test",
+    "test:e2e": "playwright test",
+    "test:e2e:ci": "playwright test --config playwright.ci.config.ts",
+    "test:e2e:install": "playwright install chromium",
     "worktree:setup": "./scripts/setup-worktree.sh",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
@@ -26,6 +29,7 @@
   },
   "devDependencies": {
     "@oxlint/plugins": "1.79.0",
+    "@playwright/test": "^1.62.1",
     "@tailwindcss/postcss": "^4",
     "@testcontainers/postgresql": "^12.1.0",
     "@types/node": "^20",
