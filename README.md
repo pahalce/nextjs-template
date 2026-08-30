@@ -14,7 +14,7 @@ vp exec portless trust
 PostgreSQLを起動し、マイグレーションを適用してから開発サーバーを起動します。
 
 ```bash
-cp .env.example .env
+cp .env.example .env.local
 docker compose up -d --wait
 vp run db:migrate
 vp run dev
@@ -30,9 +30,11 @@ worktreeを作成し、そのディレクトリで依存関係をインストー
 git worktree add ../nextjs-template-fix-ui -b fix-ui
 cd ../nextjs-template-fix-ui
 vp install
-cp .env.example .env
+vp run worktree:setup
 vp run dev
 ```
+
+`worktree:setup`は、メインworktreeの`.env.local`を現在のworktreeへコピーします。すでに`.env.local`がある場合は上書きしません。
 
 portlessがworktreeを検出し、ブランチごとにURLを分けます。この例のURLは`https://fix-ui.nextjs-template.localhost`です。
 

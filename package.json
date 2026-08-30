@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "vp lint",
     "test": "vp test",
+    "worktree:setup": "./scripts/setup-worktree.sh",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "knip": "knip",
