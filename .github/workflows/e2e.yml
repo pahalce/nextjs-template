@@ -1,4 +1,4 @@
-name: CI
+name: E2E
 
 on:
   pull_request:
@@ -10,12 +10,12 @@ permissions:
   contents: read
 
 concurrency:
-  group: ci-${{ github.workflow }}-${{ github.ref }}
+  group: e2e-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  verify:
-    name: Check, test, and build
+  e2e:
+    name: Playwright E2E tests
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -33,11 +33,8 @@ jobs:
       - name: Install dependencies
         run: vp install --frozen-lockfile
 
-      - name: Check formatting, lint, and types
-        run: vp check
+      - name: Install Chromium
+        run: vp exec playwright install --with-deps chromium
 
-      - name: Run tests
-        run: vp test --passWithNoTests
-
-      - name: Build
-        run: vp run build
+      - name: Run E2E tests
+        run: vp run test:e2e:ci
