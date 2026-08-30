@@ -36,6 +36,12 @@ jobs:
       - name: Check formatting, lint, and types
         run: vp check
 
+      - name: Find unused code and dependencies
+        run: vp run knip
+
+      - name: Find unused production code and dependencies
+        run: vp run knip:production
+
       - name: Run tests
         run: vp test --passWithNoTests
 
