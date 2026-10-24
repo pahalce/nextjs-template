@@ -6,4 +6,12 @@ allowBuilds:
   ssh2: false
   unrs-resolver: false
 catalog:
-  vite-plus: 0.3.0
+  vite-plus: 1.4.0
+  vite: npm:@voidzero-dev/vite-plus-core@1.4.0
+overrides:
+  vite@*: "catalog:"
+peerDependencyRules:
+  allowAny:
+    - vite
+  allowedVersions:
+    vite: "*"
