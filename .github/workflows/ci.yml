@@ -18,6 +18,10 @@ jobs:
     name: Check, test, and build
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      # drizzle.config.ts (loaded by Knip) and db/client.ts (imported during the build)
+      # read this at module load. Neither connects, so no database service is needed.
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nextjs_template
 
     steps:
       - name: Check out repository
