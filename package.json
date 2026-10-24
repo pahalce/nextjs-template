@@ -15,7 +15,7 @@
     "knip": "knip",
     "knip:production": "knip --production",
     "knip:fix": "knip --fix",
-    "prepare": "vp config"
+    "prepare": "vp config && next typegen"
   },
   "dependencies": {
     "drizzle-orm": "^0.45.2",
