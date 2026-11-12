@@ -15,6 +15,8 @@ concurrency:
 
 jobs:
   verify:
+    # The build runs in the E2E workflow. The name stays because branch protection
+    # requires this check by name.
     name: Check, test, and build
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -23,8 +25,8 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v6
 
-      # Knip loads drizzle.config.ts and the build imports db/client.ts; both read
-      # DATABASE_URL at load time but never connect.
+      # Knip loads drizzle.config.ts, which reads DATABASE_URL at load time but never
+      # connects.
       - name: Create environment file
         run: cp .env.example .env.local
 
@@ -45,6 +47,3 @@ jobs:
 
       - name: Run tests
         run: vp test --passWithNoTests
-
-      - name: Build
-        run: vp run build

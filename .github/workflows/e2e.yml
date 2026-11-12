@@ -23,14 +23,41 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v6
 
+      # Runs before dependencies are installed so the source hash skips node_modules.
+      - name: Cache Next.js build
+        uses: actions/cache@v6
+        with:
+          path: ${{ github.workspace }}/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('**/*.ts', '**/*.tsx', '**/*.css', 'drizzle/**') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('pnpm-lock.yaml') }}-
+
       - name: Set up Vite+
         uses: voidzero-dev/setup-vp@cab1ab9eaff52d4857875f4f2c016e36af8f2c76 # v1.22.0
         with:
           node-version: 24
           cache: true
 
+      - name: Read Playwright version
+        id: playwright
+        run: echo "version=$(vp exec playwright --version | awk '{print $2}')" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ steps.playwright.outputs.version }}
+
       - name: Install Chromium
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: vp exec playwright install --with-deps chromium
 
+      # The cache holds only the browser binaries, not the system libraries they need.
+      - name: Install Chromium system dependencies
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: vp exec playwright install-deps chromium
+
+      # The global setup runs `next build`, so this job is also the build check.
       - name: Run E2E tests
         run: vp exec playwright test --config playwright.ci.config.ts
