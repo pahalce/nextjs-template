@@ -22,8 +22,9 @@ fi
 
 if [[ -e "$target_env" ]]; then
 	echo "$target_env already exists; leaving it unchanged." >&2
-	exit 1
+else
+	cp "$source_env" "$target_env"
+	echo "Copied $source_env to $target_env"
 fi
 
-cp "$source_env" "$target_env"
-echo "Copied $source_env to $target_env"
+vp install

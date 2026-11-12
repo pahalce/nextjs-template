@@ -21,16 +21,16 @@ vp run db:migrate
 IDEなどでworktreeを作成したら、そのディレクトリで次のコマンドを実行する。
 
 ```bash
-vp install
 vp run worktree:setup
 vp run dev
 ```
 
-`worktree:setup`はメインworktreeの`.env.local`を現在のworktreeへコピーする。次の場合はコピーせずエラーで終了する。
+`worktree:setup`はメインworktreeの`.env.local`を現在のworktreeへコピーし、`vp install`で依存関係をインストールする。次の場合はエラーで終了する。
 
 - メインworktreeで実行した
 - メインworktreeに`.env.local`がない
-- 現在のworktreeに`.env.local`がすでにある
+
+現在のworktreeに`.env.local`がすでにある場合は、コピーを省略して`vp install`だけ実行する。
 
 既存の`.env.local`を更新したい場合は、必要な値を手動で反映する。スクリプトは既存ファイルを上書きしない。
 
