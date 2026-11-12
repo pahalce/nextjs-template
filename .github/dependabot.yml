@@ -1,6 +1,78 @@
 version: 2
 updates:
+  # npm packages (pnpm, including the catalog in pnpm-workspace.yaml)
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: daily
+      time: "06:00"
+      timezone: Asia/Tokyo
+    # Wait a few days after a release so broken or compromised versions get caught first.
+    cooldown:
+      default-days: 3
+    open-pull-requests-limit: 10
+    versioning-strategy: increase
+    commit-message:
+      prefix: chore(deps)
+      prefix-development: chore(deps-dev)
+    groups:
+      # Minor and patch updates land together in one PR.
+      minor-and-patch:
+        update-types:
+          - minor
+          - patch
+      # Major updates are grouped by ecosystem so tightly coupled packages move together.
+      next:
+        patterns:
+          - next
+          - "@next/*"
+          - react
+          - react-dom
+          - "@types/react"
+          - "@types/react-dom"
+          - babel-plugin-react-compiler
+        update-types:
+          - major
+      drizzle:
+        patterns:
+          - drizzle-orm
+          - drizzle-kit
+        update-types:
+          - major
+      vite-plus:
+        patterns:
+          - vite-plus
+          - vite
+          - "@voidzero-dev/*"
+        update-types:
+          - major
+      tailwind:
+        patterns:
+          - tailwindcss
+          - "@tailwindcss/*"
+        update-types:
+          - major
+
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Asia/Tokyo
+    commit-message:
+      prefix: ci
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+
+  - package-ecosystem: docker-compose
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Asia/Tokyo
+    commit-message:
+      prefix: chore(docker)
