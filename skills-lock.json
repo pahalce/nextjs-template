@@ -73,12 +73,6 @@
       "skillPath": "pstack/skills/typescript-best-practices/SKILL.md",
       "computedHash": "f1c25fcfc1616686f387465824b1f4458782d962e64ef2e217b3ffb02bf3650a"
     },
-    "unslop": {
-      "source": "cursor/plugins",
-      "sourceType": "github",
-      "skillPath": "pstack/skills/unslop/SKILL.md",
-      "computedHash": "3dfc2afeda677e12c6065497a40df7d895859de1c7d1cffb899b1559d129fe4f"
-    },
     "wizard": {
       "source": "mattpocock/skills",
       "sourceType": "github",
