@@ -35,7 +35,7 @@
     "@types/react-dom": "^19.3.0",
     "babel-plugin-react-compiler": "1.0.0",
     "drizzle-kit": "^0.31.11",
-    "knip": "6.47.0",
+    "knip": "6.48.0",
     "portless": "^0.18.1",
     "tailwindcss": "^4",
     "typescript": "^7.0.2",
